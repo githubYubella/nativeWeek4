@@ -10,7 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import id.ac.ubaya.advweek4_160419107.R
+import id.ac.ubaya.advweek4_160419107.model.Student
 import id.ac.ubaya.advweek4_160419107.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_student_list.*
 
@@ -39,6 +42,14 @@ class StudentListFragment : Fragment() {
 //        assign adapter tersebut ke recycler view
         recView.adapter = studentListAdapter
 
+        refreshLayout.setOnRefreshListener {
+            recView.visibility = View.GONE
+            txtError.visibility = View.GONE
+            progressLoad.visibility = View.VISIBLE
+            viewModel.refresh()
+            refreshLayout.isRefreshing =false
+        }
+
 //        utk assign ke variabel yg dimiliki view model (Method sendiri)
         observeViewModel()
 
@@ -55,13 +66,13 @@ class StudentListFragment : Fragment() {
                 txtError.visibility = View.GONE
             }
         })
-        viewModel.loadingDoneLD.observe(viewLifecycleOwner, Observer {
+        viewModel.loadingLD.observe(viewLifecycleOwner, Observer {
             if(it){
-                progressLoad.visibility = View.GONE
-                recView.visibility= View.VISIBLE
-            }else{
-                progressLoad.visibility= View.VISIBLE
+                progressLoad.visibility = View.VISIBLE
                 recView.visibility= View.GONE
+            }else{
+                progressLoad.visibility= View.GONE
+                recView.visibility= View.VISIBLE
 
             }
         })
