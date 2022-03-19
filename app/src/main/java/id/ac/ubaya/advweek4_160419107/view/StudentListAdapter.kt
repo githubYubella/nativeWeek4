@@ -7,6 +7,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import id.ac.ubaya.advweek4_160419107.R
 import id.ac.ubaya.advweek4_160419107.model.Student
+import id.ac.ubaya.advweek4_160419107.util.loadImage
 import kotlinx.android.synthetic.main.student_list_item.view.*
 
 class StudentListAdapter(val studentList: ArrayList<Student>)
@@ -31,6 +32,7 @@ class StudentListAdapter(val studentList: ArrayList<Student>)
 //Meload data yang sesuai dari arraylist student, lalu dipasang ke dalam layoutnya
         holder.view.txtId.text = studentList[position].id
         holder.view.txtName.text = studentList[position].name
+        holder.view.imageView.loadImage(studentList[position].photoUrl.toString(), holder.view.progressBar)
 
         holder.view.btnDetail.setOnClickListener {
             val action = StudentListFragmentDirections.actionToStudentDetail()
