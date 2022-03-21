@@ -18,6 +18,8 @@ import id.ac.ubaya.advweek4_160419107.view.StudentListAdapter
 class ListViewModel(application: Application):AndroidViewModel(application) {
 
     val studentsLD = MutableLiveData<List<Student>>()
+//    val studentsLD = MutableLiveData<Student>()
+
     val loadingErrorLD = MutableLiveData<Boolean>()
     val loadingLD = MutableLiveData<Boolean>()
 
@@ -29,12 +31,14 @@ class ListViewModel(application: Application):AndroidViewModel(application) {
         loadingErrorLD.value = false
         loadingLD.value=true
         queue = Volley.newRequestQueue(getApplication())
-        val url = "http://adv.jitusolution.com/student.php"
+        val url = "http://adv.jitusolution.com/student.php?"
 
         val stringRequest = StringRequest(Request.Method.GET, url,
             { response ->
                 val sType = object  : TypeToken<List<Student>>(){}.type
-                val result= Gson().fromJson<List<Student>>(response, sType)
+//                val result= Gson().fromJson<List<Student>>(response, sType)
+                val result = Gson().fromJson<ArrayList<Student>>(response, sType)
+
                 studentsLD.value= result
                 loadingLD.value=false
                 Log.d("showvolley", response.toString())

@@ -5,15 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import id.ac.ubaya.advweek4_160419107.R
-import id.ac.ubaya.advweek4_160419107.model.Student
 import id.ac.ubaya.advweek4_160419107.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_student_list.*
 
@@ -55,10 +50,13 @@ class StudentListFragment : Fragment() {
 
     }
 
-    fun observeViewModel(){
-        viewModel.studentsLD.observe(viewLifecycleOwner, Observer {
+
+
+    private fun observeViewModel(){
+        viewModel.studentsLD.observe(viewLifecycleOwner) {
+
             studentListAdapter.updateStudentList(it)
-        })
+        }
         viewModel.loadingErrorLD.observe(viewLifecycleOwner, Observer {
             if(it){
                 txtError.visibility= View.VISIBLE
@@ -80,3 +78,7 @@ class StudentListFragment : Fragment() {
 
 
 }
+
+//private fun StudentListAdapter.updateStudentList(newStudentList: Student?) {
+//
+//}

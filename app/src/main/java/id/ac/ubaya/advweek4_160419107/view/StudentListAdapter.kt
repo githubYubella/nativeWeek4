@@ -14,7 +14,7 @@ class StudentListAdapter(val studentList: ArrayList<Student>)
     :RecyclerView.Adapter<StudentListAdapter.StudentViewHolder>() {
     class StudentViewHolder(val view: View): RecyclerView.ViewHolder(view)
 
-    fun updateStudentList(newStudentList:List<Student>){
+    fun updateStudentList(newStudentList: List<Student>){
         studentList.clear()
         studentList.addAll(newStudentList)
         notifyDataSetChanged() //merender ulang recyler view sehingga terupdate
@@ -35,7 +35,7 @@ class StudentListAdapter(val studentList: ArrayList<Student>)
         holder.view.imageView.loadImage(studentList[position].photoUrl.toString(), holder.view.progressBar)
 
         holder.view.btnDetail.setOnClickListener {
-            val action = StudentListFragmentDirections.actionToStudentDetail()
+            val action = StudentListFragmentDirections.actionToStudentDetail(studentList[position].id.toString())
             Navigation.findNavController(it).navigate(action)
         }
     }
@@ -44,4 +44,6 @@ class StudentListAdapter(val studentList: ArrayList<Student>)
 //        Mereturn jumlah student yang ada dalam arraylist
         return studentList.size
     }
+
+
 }
