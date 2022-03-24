@@ -11,10 +11,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.ac.ubaya.advweek4_160419107.R
+import id.ac.ubaya.advweek4_160419107.util.loadImage
 import id.ac.ubaya.advweek4_160419107.viewmodel.DetailViewModel
 import id.ac.ubaya.advweek4_160419107.viewmodel.ListViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_student_detail.*
+import kotlinx.android.synthetic.main.fragment_student_detail.txtId
+import kotlinx.android.synthetic.main.fragment_student_detail.txtName
 import kotlinx.android.synthetic.main.fragment_student_list.*
+import kotlinx.android.synthetic.main.student_list_item.*
+import java.util.concurrent.TimeUnit
 
 class StudentDetailFragment : Fragment() {
     private lateinit var viewModel:DetailViewModel
@@ -48,6 +56,18 @@ class StudentDetailFragment : Fragment() {
             txtName.setText(it.name)
             txtBod.setText(it.bod)
             txtPhone.setText(it.phone)
+            imageView2.loadImage(it.photoUrl.toString(), progressBar2)
+
+            var student= it
+            btnNotif.setOnClickListener {
+                Observable.timer(5, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe{
+                        MainActivity.showNotification(student.name.toString(), "A new notification created", R.drawable.ic_baseline_person_24)
+
+                    }
+            }
         })
     }
 
