@@ -18,9 +18,6 @@ class DetailViewModel(application: Application): AndroidViewModel(application) {
     val TAG = "volleyTag"
     private var queue: RequestQueue?=null
 
-
-
-
     fun fetch(id:String){
         queue =  Volley.newRequestQueue(getApplication())
         var url = "http://adv.jitusolution.com/student.php?id=$id"

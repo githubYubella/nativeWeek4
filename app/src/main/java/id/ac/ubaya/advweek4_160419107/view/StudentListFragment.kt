@@ -26,8 +26,6 @@ class StudentListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         viewModel= ViewModelProvider(this).get(ListViewModel::class.java)
         viewModel.refresh()
 
